@@ -60,6 +60,9 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "port": 4567
+          },
           "configurations": {
             "production": {
               "buildTarget": "ng-17-starter:build:production"
