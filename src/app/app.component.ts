@@ -1,4 +1,4 @@
-import { Component, Injector } from '@angular/core';
+import { Component, Injector, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
@@ -15,8 +15,9 @@ export class AppComponent {
   title = 'ng-17-starter';
   constructor(
     private domMediatorService: DomMediatorService,
+    private zone: NgZone,
     private injector: Injector,
   ) {
-    this.domMediatorService.init(this.injector);
+    this.domMediatorService.init(this.injector, this.zone);
   }
 }

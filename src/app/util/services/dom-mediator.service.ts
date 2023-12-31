@@ -1,4 +1,4 @@
-import { Injectable, Injector } from '@angular/core';
+import { Injectable, Injector, NgZone } from '@angular/core';
 import { Subject } from 'rxjs';
 
 @Injectable({
@@ -11,11 +11,12 @@ export class DomMediatorService {
 
   constructor() {}
 
-  init(injector: Injector) {
+  init(injector: Injector, zone: NgZone) {
     const dummyElement = document.createElement('div');
     const angularComponentRef = {
       injector: injector,
       domListener: dummyElement,
+      ngZone: zone,
       domMediator: injector.get(DomMediatorService),
     };
     (window as any).angularComponentRef = angularComponentRef;
@@ -26,7 +27,9 @@ export class DomMediatorService {
   emitEvent(data: DomToAngularMessage) {
     this.eventSource.next(data);
 
-    const customEvent = new CustomEvent('angularMediatorEvent', { detail: 'testdata to dom' });
+    const customEvent = new CustomEvent('angularMediatorEvent', {
+      detail: 'testdata to dom',
+    });
     this.angularComponentRef.domListener.dispatchEvent(customEvent);
   }
 }

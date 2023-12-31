@@ -26,18 +26,21 @@ bootstrapApplication(AppComponent, appConfig).catch((err) =>
     function launchCommunication() {
       const $win = window as any;
       var $angularComponentRef = $win.angularComponentRef;
+      var zone = $angularComponentRef.ngZone;
       var domMediator = $angularComponentRef.domMediator;
 
-      var errorText = 'Bad request';
+      zone.run(() => {
+        var errorText = 'Bad request';
 
-      /** @type DomToAngularMessage   */
-      var obj = {
-        eventType: 'ERROR_DIALOG',
-        details: {
-          errorDialogMessage: errorText,
-        },
-      };
-      domMediator.emitEvent(obj);
+        /** @type DomToAngularMessage   */
+        var obj = {
+          eventType: 'ERROR_DIALOG',
+          details: {
+            errorDialogMessage: errorText,
+          },
+        };
+        domMediator.emitEvent(obj);
+      });
     }
   }
 })();
